@@ -1,0 +1,19 @@
+.nav {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+
+    &__link {
+        min-width: 55px;
+        margin: 10px;
+        text-decoration: none;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            font-weight: bold;
+        }
+    }
+}
