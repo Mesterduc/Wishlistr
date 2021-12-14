@@ -10,7 +10,7 @@ function Wishes(props) {
 			{wishes.map((wish) => {
 				return (
 					<article className="wish" key={wish._id}>
-						<Link className="wish__link" to={`/wish/${wish._id}`} key={wish._id}></Link>
+						<Link className="wish__link" to={`/wish/${wish._id}`}></Link>
 						<Wish wish={wish}></Wish>
 					</article>
 				)

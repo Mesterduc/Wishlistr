@@ -4,6 +4,7 @@ import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
 import Wishes from './views/Wishes/Wishes'
 import Wish from './views/Wish/Wish'
+import Login from './views/Login/Login'
 const API_URL = process.env.REACT_APP_API
 
 function App() {
@@ -43,16 +44,50 @@ function App() {
    
 	}
 	function getWish(id) {
-		return wishes.find((wish) => (wish._id = id))
+    return wishes.find((wish) => wish._id == id)
 	}
-	// console.log(getWish())
+  async function postComment(id, name, text) {
+		const data = {
+            id: id,
+			Name: name,
+			Text: text,
+		}
+		const url = `${API_URL}/wish/:id/comment`
+		const response = await fetch(url, {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+		const reply = await response.json()
+    console.log(reply)
+    const hej = wishes.map(wish => {
+      if(wish._id == reply._id){
+        wish = reply
+      }
+      return wish
+    })
+    // console.log(hej)
+    setWishes(hej)
+		if (!response.ok) {
+			throw reply
+		}
+   
+	}
+  
+	
+// console.log(wishes)
+
 	return (
 		<>
 			<Navbar />
 			<Router>
 				<Wishes path='/' wishes={wishes}></Wishes>
-				<Wish path='/wish/:id' getWish={getWish}></Wish>
+				<Wish path='/wish/:id' getWish={getWish} postComment={postComment}></Wish>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
+				<Login path='/login'></Login>
 			</Router>
 		</>
 	)

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-const API_URL = process.env.REACT_APP_API
+import { useState } from 'react'
+// const API_URL = process.env.REACT_APP_API
 function CreateWish(props) {
     const {postWish} = props
 	const [title, setTitle] = useState('')

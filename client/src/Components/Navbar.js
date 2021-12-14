@@ -6,6 +6,7 @@ function navbar() {
 			<nav className="nav">
 				<Link className="nav__link" to="/">Home</Link>
 				<Link className="nav__link"to="/createWish">Create</Link>
+				<Link className="nav__link"to="/login">Login</Link>
 			</nav>
 		</>
 	)

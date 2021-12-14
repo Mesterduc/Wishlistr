@@ -7,7 +7,7 @@ function createRouter() {
 	// wish
 	// GET
 	router.get('/wish', async (req, res) => {
-		const wishes = await Wish.find().sort({createdAt: "desc"})
+		const wishes = await Wish.find().sort({ createdAt: 'desc' })
 		res.json(wishes)
 	})
 
@@ -20,7 +20,7 @@ function createRouter() {
 		} catch (error) {
 			res.status(500)
 			res.json({
-				error: 'Quote could not be created',
+				error: 'Wish could not be created',
 				details: error.toString(),
 			})
 		}
@@ -41,10 +41,10 @@ function createRouter() {
 		}
 	})
 	// DELETE
-  router.delete('/wish', async (req, res) => {
+	router.delete('/wish', async (req, res) => {
 		try {
 			// const quote = await Quote.findByIdAndUpdate( {_id: req.body.id}, { $inc: { likes: req.body.number }} );
-      const wish = await Wish.findByIdAndDelete(req.body.id)
+			const wish = await Wish.findByIdAndDelete(req.body.id)
 			if (wish) {
 				res.json(wish)
 			} else {
@@ -59,14 +59,43 @@ function createRouter() {
 
 	// selected wish
 	// GET
-  router.get('/wish/:id', async (req, res) => {
+	router.get('/wish/:id', async (req, res) => {
 		const wish = await Wish.findById(req.params.id)
-    console.log("req.params.id")
 		res.json(wish)
 	})
 	// Create
 	// UPDATE
 	// DELETE
+
+	// wish comment
+	//create
+	router.post('/wish/:id/comment', async (req, res) => {
+		try {
+      await Wish.findByIdAndUpdate({_id: req.body.id}, { $push: { 
+        Comments: { 
+          Name: req.body.Name,
+          Text: req.body.Text,
+        }
+      }
+      })
+      const wish = await Wish.findByIdAndUpdate({_id: req.body.id}, { $push: { 
+        Comments: { 
+          $each:[],
+          $sort: {"createdAt": -1}
+        }
+      }
+      }, {new: true})
+      res.status(201);
+      res.json(wish);
+    } catch (error) {
+      res.status(500);
+      res.json({
+        error: "Wish comment could not be created",
+        details: error.toString(),
+      });
+    }
+	})
+
 
 	return router
 }
