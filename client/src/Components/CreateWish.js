@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import apiService from '../apiService'
 // const API_URL = process.env.REACT_APP_API
 function CreateWish(props) {
     const {postWish} = props
@@ -6,15 +7,19 @@ function CreateWish(props) {
 	const [link, setLink] = useState('')
 	const [description, setDescription] = useState('')
     function createWish() {
-		if (title.length > 0) {
-			try {
-				postWish(title, link, description)
-                setTitle('')
-				setLink('')
-				setDescription('')
-			} catch {}
-		} else {
-			// setError('Missing input')
+		// console.log(apiService.loggedIn)
+		if(apiService.loggedIn()){
+			if (title.length > 0) {
+					postWish(title, link, description)
+					setTitle('')
+					setLink('')
+					setDescription('')
+			} else {
+				// setError('Missing input')
+				alert("You need a title for your wish")
+			}
+		}else {
+			alert("You need to be logged in to create a wish")
 		}
 	}
     

@@ -5,16 +5,15 @@ import CreateWish from './Components/CreateWish'
 import Wishes from './views/Wishes/Wishes'
 import Wish from './views/Wish/Wish'
 import Login from './views/Login/Login'
-const API_URL = process.env.REACT_APP_API
+import apiService from './apiService'
+// const API_URL = process.env.REACT_APP_API
 
 function App() {
 	const [wishes, setWishes] = useState([])
 	useEffect(() => {
 		async function getData() {
-			const url = `${API_URL}/wish`
-			const response = await fetch(url)
-			const data = await response.json()
-			setWishes(data)
+			const response = await apiService.getWishes()
+			setWishes(response)
 		}
 		getData()
 	}, [])
@@ -25,60 +24,33 @@ function App() {
 			Link: link,
 			Description: description,
 		}
-		const url = `${API_URL}/wish/`
-		const response = await fetch(url, {
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		})
-		const reply = await response.json()
-    setWishes([ reply, ...wishes])
-		if (!response.ok) {
-			throw reply
-		}else {
-      navigate("/")
-    }
-   
+		try {
+			const reply = await apiService.postWish(data)
+			setWishes([reply, ...wishes])
+			navigate('/')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 	function getWish(id) {
-    return wishes.find((wish) => wish._id == id)
+		return wishes.find((wish) => wish._id == id)
 	}
-  async function postComment(id, name, text) {
+	async function postComment(id, name, text) {
 		const data = {
-            id: id,
+			id: id,
 			Name: name,
 			Text: text,
 		}
-		const url = `${API_URL}/wish/:id/comment`
-		const response = await fetch(url, {
-			method: 'POST',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
+		const reply = await apiService.postComment(data)
+		console.log(reply)
+		const hej = wishes.map((wish) => {
+			if (wish._id == reply._id) {
+				wish = reply
+			}
+			return wish
 		})
-		const reply = await response.json()
-    console.log(reply)
-    const hej = wishes.map(wish => {
-      if(wish._id == reply._id){
-        wish = reply
-      }
-      return wish
-    })
-    // console.log(hej)
-    setWishes(hej)
-		if (!response.ok) {
-			throw reply
-		}
-   
+		setWishes(hej)
 	}
-  
-	
-// console.log(wishes)
 
 	return (
 		<>

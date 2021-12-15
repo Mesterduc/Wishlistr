@@ -1,12 +1,26 @@
 import { useState } from 'react'
 import { navigate } from '@reach/router'
+import apiService from '../../apiService'
 function Login(props) {
 	const [email, setEmail] = useState([])
 	const [password, setPassword] = useState([])
 
-	function login() {
-		navigate('/')
+	async function login() {
+		try{
+			await apiService.login(email, password)
+			// navigate('/')
+		}catch(error){
+			alert(`${error.msg}`)
+		}
 	}
+
+	function getToken(){
+		console.log(apiService.getToken())
+	}
+	function logout(){
+		apiService.logout()
+	}
+
 	return (
 		<>
 			<p>login page</p>
@@ -27,6 +41,12 @@ function Login(props) {
 					Login
 				</button>
 			</section>
+			<button type='button' onClick={() => getToken()}>
+					token
+				</button>
+				<button type='button' onClick={() => logout()}>
+					logout
+				</button>
 		</>
 	)
 }

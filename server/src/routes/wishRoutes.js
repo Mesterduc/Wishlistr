@@ -1,10 +1,9 @@
 import express from 'express'
 import Wish from '../models/wish.js'
+import jwt from 'jsonwebtoken'
 
-function createRouter() {
+function wishRouter() {
 	const router = express.Router()
-
-	// wish
 	// GET
 	router.get('/wish', async (req, res) => {
 		const wishes = await Wish.find().sort({ createdAt: 'desc' })
@@ -71,33 +70,41 @@ function createRouter() {
 	//create
 	router.post('/wish/:id/comment', async (req, res) => {
 		try {
-      await Wish.findByIdAndUpdate({_id: req.body.id}, { $push: { 
-        Comments: { 
-          Name: req.body.Name,
-          Text: req.body.Text,
-        }
-      }
-      })
-      const wish = await Wish.findByIdAndUpdate({_id: req.body.id}, { $push: { 
-        Comments: { 
-          $each:[],
-          $sort: {"createdAt": -1}
-        }
-      }
-      }, {new: true})
-      res.status(201);
-      res.json(wish);
-    } catch (error) {
-      res.status(500);
-      res.json({
-        error: "Wish comment could not be created",
-        details: error.toString(),
-      });
-    }
+			await Wish.findByIdAndUpdate(
+				{ _id: req.body.id },
+				{
+					$push: {
+						Comments: {
+							Name: req.body.Name,
+							Text: req.body.Text,
+						},
+					},
+				}
+			)
+			const wish = await Wish.findByIdAndUpdate(
+				{ _id: req.body.id },
+				{
+					$push: {
+						Comments: {
+							$each: [],
+							$sort: { createdAt: -1 },
+						},
+					},
+				},
+				{ new: true }
+			)
+			res.status(201)
+			res.json(wish)
+		} catch (error) {
+			res.status(500)
+			res.json({
+				error: 'Wish comment could not be created',
+				details: error.toString(),
+			})
+		}
 	})
-
 
 	return router
 }
 
-export default createRouter
+export default wishRouter
