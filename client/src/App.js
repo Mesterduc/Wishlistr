@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { Router, navigate} from '@reach/router'
 import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
-import Wish from './Components/Wish'
+import WishEdit from './Components/WishEdit'
+// import Wish from './Components/Wish'
 import Wishes from './views/Wishes/Wishes'
 import WishView from './views/Wish/Wish'
 import Login from './views/Login/Login'
@@ -83,7 +84,9 @@ function App() {
 			<Navbar />
 			<Router>
 				<Wishes path='/' wishes={wishes}></Wishes>
-				<WishView path='/wish/:id' gifted={gifted} getWish={getWish} postComment={postComment} deleteWish={deleteWish}></WishView>
+				<WishView path='/wish/:id/*' gifted={gifted} getWish={getWish} postComment={postComment} deleteWish={deleteWish}>
+          <WishEdit path="edit" getWish={getWish}></WishEdit>
+        </WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login'></Login>
 			</Router>

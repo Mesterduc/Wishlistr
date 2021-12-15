@@ -59,16 +59,9 @@ function wishRouter() {
 	})
 	
 
-	// selected wish
-	// GET
-	router.get('/wish/:id', async (req, res) => {
-		console.log(req.params.id)
-		const wish = await Wish.findById(req.params.id)
-		res.json(wish)
-	})
-	// Create
-	// UPDATE
-	router.put('/wish/:id', async (req, res) => {
+	
+	// UPDATE wish status
+	router.put('/wish/:id/isGifted', async (req, res) => {
 		// console.log(req.body.Gifted)
 		const wish = await Wish.findByIdAndUpdate(req.body.id, {"$set":{"isGifted": req.body.Gifted}},{ new: true })
 		console.log(wish)

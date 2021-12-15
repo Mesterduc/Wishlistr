@@ -15,7 +15,6 @@ function Wishes(props) {
 					<article className="wish"  key={wish._id}>
 						<Link className="wish__link" to={`/wish/${wish._id}`}></Link>
 						<Wish wish={wish}></Wish>
-						{/* {children} */}
 					</article>
 				)
 			})}

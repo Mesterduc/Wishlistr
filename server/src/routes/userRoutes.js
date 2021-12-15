@@ -18,7 +18,7 @@ function userRouters(secret) {
                 console.log(user.Password)
                 const token = jwt.sign(payload, secret, {
                     algorithm: 'HS512',
-                    expiresIn: '2h',
+                    expiresIn: '100h',
                 })
                 res.json({
                     msg: `User '${email}' authenticated successfully`,
@@ -29,7 +29,7 @@ function userRouters(secret) {
 			res.status(404).json({ msg: 'User not found!' })
 		}
 	})
-    
+
 	// POST user
 	router.post('/user', async (req, res) => {
         const password = bcrypt.hashSync(req.body.Password, 10)

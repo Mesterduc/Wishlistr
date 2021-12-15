@@ -1,0 +1,43 @@
+.wish-form {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	height: 100vh;
+	width: 100vw;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&__container {
+        position: relative;
+		width: 50%;
+		height: 50%;
+		background-color: white;
+		z-index: 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+	}
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__cancel {
+        position: absolute;
+        top:0;
+        right: 0;
+        font-size: 24px;
+        background-color: white;
+        border: none;
+    }
+
+    &__button {
+        margin-top: 15px;
+    }
+
+
+}

@@ -31,7 +31,7 @@ class ApiService {
 	}
 
 	async gifted(id) {
-		const response = await this.put('/wish/:id', id)
+		const response = await this.put('/wish/:id/isGifted', id)
 		return response
 	}
 
