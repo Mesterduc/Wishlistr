@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import apiService from '../apiService'
-// const API_URL = process.env.REACT_APP_API
+
 function CreateWish(props) {
     const {postWish} = props
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
 	const [description, setDescription] = useState('')
     function createWish() {
-		// console.log(apiService.loggedIn)
 		if(apiService.loggedIn()){
 			if (title.length > 0) {
 					postWish(title, link, description)

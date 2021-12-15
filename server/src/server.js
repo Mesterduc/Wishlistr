@@ -59,7 +59,6 @@ function createServer() {
       // If the user didn't authorize correctly
       res.status(401).json({ error: err.message }); // Return 401 with error message.
     } else {
-      console.log("OK ")
       next(); // If no errors, forward request to next middleware or route handler
     }
   });

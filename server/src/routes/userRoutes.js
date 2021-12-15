@@ -29,6 +29,7 @@ function userRouters(secret) {
 			res.status(404).json({ msg: 'User not found!' })
 		}
 	})
+    
 	// POST user
 	router.post('/user', async (req, res) => {
         const password = bcrypt.hashSync(req.body.Password, 10)

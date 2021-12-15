@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Router, navigate } from '@reach/router'
+import { Router, navigate} from '@reach/router'
 import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
+import Wish from './Components/Wish'
 import Wishes from './views/Wishes/Wishes'
-import Wish from './views/Wish/Wish'
+import WishView from './views/Wish/Wish'
 import Login from './views/Login/Login'
 import apiService from './apiService'
-// const API_URL = process.env.REACT_APP_API
 
 function App() {
 	const [wishes, setWishes] = useState([])
@@ -52,12 +52,38 @@ function App() {
 		setWishes(hej)
 	}
 
+	async function gifted(id, gifted) {
+    const data = {
+			id: id,
+      Gifted: gifted
+		}
+    const reply = await apiService.gifted(data)
+		const newData = wishes.map((wish) => {
+			if (wish._id === reply._id) {
+				wish.isGifted = !wish.isGifted
+			}
+			return wish
+		})
+		setWishes(newData)
+	}
+
+  async function deleteWish(id){
+    if(apiService.loggedIn()){
+      const reply = await apiService.deleteWish({id})
+      const newData = wishes.filter((wish) => wish._id !== reply._id)
+      setWishes(newData)
+      navigate("/")
+    }else {
+      alert("You need to be logged in, to delete this wish")
+    }
+  }
+
 	return (
 		<>
 			<Navbar />
 			<Router>
 				<Wishes path='/' wishes={wishes}></Wishes>
-				<Wish path='/wish/:id' getWish={getWish} postComment={postComment}></Wish>
+				<WishView path='/wish/:id' gifted={gifted} getWish={getWish} postComment={postComment} deleteWish={deleteWish}></WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login'></Login>
 			</Router>
