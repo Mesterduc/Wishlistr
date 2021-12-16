@@ -43,11 +43,13 @@ function wishRouter() {
 	})
 
 	// UPDATE
-	// TODO
 	router.put('/wish', async (req, res) => {
 		try {
-			if (quote) {
-				res.json(quote)
+			console.log(req.body.id)
+			const wish =  await Wish.findByIdAndUpdate({_id: req.body.id}, {Title: req.body.Title, Description: req.body.Description, Link: req.body.Link})
+			// console.log(wish)
+			if (wish) {
+				res.json(wish)
 			} else {
 				res.status(404)
 				res.json({ error: 'Wish not found' })

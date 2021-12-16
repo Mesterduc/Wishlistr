@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Router, navigate} from '@reach/router'
 import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
-import WishEdit from './Components/WishEdit'
+// import WishEdit from './Components/WishEdit'
 // import Wish from './Components/Wish'
 import Wishes from './views/Wishes/Wishes'
 import WishView from './views/Wish/Wish'
@@ -17,7 +17,7 @@ function App() {
 			setWishes(response)
 		}
 		getData()
-	}, [])
+	}, [wishes])
 
 	async function postWish(title, link, description) {
 		const data = {
@@ -34,7 +34,7 @@ function App() {
 		}
 	}
 	function getWish(id) {
-		return wishes.find((wish) => wish._id == id)
+		return wishes.find((wish) => wish._id === id)
 	}
 	async function postComment(id, name, text) {
 		const data = {
@@ -43,9 +43,8 @@ function App() {
 			Text: text,
 		}
 		const reply = await apiService.postComment(data)
-		console.log(reply)
 		const hej = wishes.map((wish) => {
-			if (wish._id == reply._id) {
+			if (wish._id === reply._id) {
 				wish = reply
 			}
 			return wish
@@ -79,13 +78,31 @@ function App() {
     }
   }
 
+  async function editWish(title, description, link, id){
+    const data = {
+      id: id,
+      Title: title,
+      Description: description,
+      Link: link
+    }
+    const reply = await apiService.editWish(data)
+		const newData = wishes.map((wish) => {
+			if (wish._id === reply._id) {
+				wish = reply
+			}
+			return wish
+		})
+		setWishes(newData)
+
+  }
+
 	return (
 		<>
 			<Navbar />
 			<Router>
 				<Wishes path='/' wishes={wishes}></Wishes>
-				<WishView path='/wish/:id/*' gifted={gifted} getWish={getWish} postComment={postComment} deleteWish={deleteWish}>
-          <WishEdit path="edit" getWish={getWish}></WishEdit>
+				<WishView path='/wish/:id/*' gifted={gifted} editWish={editWish} getWish={getWish} postComment={postComment} deleteWish={deleteWish}>
+          {/* <WishEdit path="edit" getWish={getWish} ></WishEdit> */}
         </WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login'></Login>

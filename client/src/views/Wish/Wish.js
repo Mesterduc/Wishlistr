@@ -1,14 +1,15 @@
 import WishComponent from '../../Components/Wish'
 import WishComment from '../../Components/WishComment'
 import WishCommentCreate from '../../Components/WishCommentCreate'
+import WishEdit from '../../Components/WishEdit'
 import apiService from '../../apiService'
 import { useState } from 'react'
 
 function Wish(props) {
-	const { getWish, id, postComment, gifted, deleteWish, children } = props
+	const { getWish, id, postComment, gifted, deleteWish, editWish } = props
 	const wish = getWish(id)
 
-	const [isEdit, setIsEdit] = useState(true)
+	const [isEdit, setIsEdit] = useState(false)
 
 	function isGifted() {
 		if (apiService.loggedIn()) {
@@ -17,17 +18,13 @@ function Wish(props) {
 			alert('You need to be logged in, to change gift status')
 		}
 	}
+	function showModal(){
+		setIsEdit(!isEdit)
+	}
 
 	return (
 		<>
-			{isEdit && (
-				<section className='wish-form' onClick={() => setIsEdit(!isEdit)}>
-					<div className='wish-form__container'>
-						<button className='wish-form__cancel' onClick={() => setIsEdit(!isEdit)}>x</button>
-						{children}
-					</div>
-				</section>
-			)}
+			{isEdit && <WishEdit wish={wish} showModel={showModal} editWish={editWish}></WishEdit>}
 			{wish && (
 				<div className='wish'>
 					<WishComponent wish={wish} gifted={gifted}></WishComponent>
@@ -37,7 +34,7 @@ function Wish(props) {
 					<button type='checkbox' onClick={() => deleteWish(id)}>
 						Delete wish
 					</button>
-					<button type='checkbox' onClick={() => setIsEdit(!isEdit)}>
+					<button type='checkbox' onClick={() => showModal()}>
 						Edit wish
 					</button>
 					<WishCommentCreate id={wish._id} postComment={postComment}></WishCommentCreate>
