@@ -12,13 +12,13 @@ import apiService from './apiService'
 function App() {
 	const [wishes, setWishes] = useState([])
 	useEffect(() => {
-		async function getData() {
-			const response = await apiService.getWishes()
-			setWishes(response)
-		}
-		getData()
-	}, [wishes])
-
+    getData()
+	}, [])
+  
+  async function getData() {
+    const response = await apiService.getWishes()
+    setWishes(response)
+  }
 	async function postWish(title, link, description) {
 		const data = {
 			Title: title,
@@ -93,7 +93,6 @@ function App() {
 			return wish
 		})
 		setWishes(newData)
-
   }
 
 	return (

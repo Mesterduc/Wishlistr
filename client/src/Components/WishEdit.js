@@ -27,6 +27,7 @@ function WishEdit(props) {
 					<button className='wish-form__cancel' onClick={() => showModel()}>
 						x
 					</button>
+                    <h2>Want to change your wish?</h2>
 
 					<article className='wish-form__form'>
 						<label className='wish-form__label'>Title:</label>
