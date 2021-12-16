@@ -25,8 +25,9 @@ function CreateWish(props) {
 	return (
 		<>
 			<article className="createWish">
-				<p>create wish</p>
+				<h1 className="createWish__header">create wish</h1>
 				<input
+				className="createWish__input"
 					placeholder='Title'
 					onChange={(event) => {
 						setTitle(event.target.value)
@@ -34,6 +35,7 @@ function CreateWish(props) {
 					value={title}
 				></input>
 				<input
+				className="createWish__input"
 					placeholder='Link'
 					onChange={(event) => {
 						setLink(event.target.value)
@@ -41,6 +43,7 @@ function CreateWish(props) {
 					value={link}
 				></input>
 				<textarea
+				className="createWish__input"
 					placeholder='Description'
 					onChange={(event) => {
 						setDescription(event.target.value)

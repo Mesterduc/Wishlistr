@@ -5,7 +5,19 @@
     flex-direction: column;
 
     &__input{
+        padding: 10px;
         margin: 5px;
+        border-radius: 10px;
+        border: solid 1px black
+    }
+    &__button {
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+        border: solid 1px black;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
     }
 
     &__signUp {
@@ -21,12 +33,24 @@
     flex-direction: column;
 
     &__input{
+        padding: 10px;
         margin: 5px;
+        border-radius: 10px;
+        border: solid 1px black
     }
 
     &__signUp {
         color: rgba(0,0,0, 0.4);
         margin: 10px;
         font-size: 13px;
+    }
+    &__button {
+        padding: 8px 10px 8px 10px;
+        border-radius: 5px;
+        border: solid 1px black;
+        background-color: black;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
     }
 }

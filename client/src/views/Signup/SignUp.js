@@ -40,7 +40,7 @@ function SignUp(props) {
 					onChange={(event) => setPassword(event.target.value)}
 				></input>
 				<button className="signUp__button" type='button' onClick={() => signUp()}>
-					signUp
+					Sign Up
 				</button>
 				<Link to="/login" className="signUp__signUp">Sign in </Link>
 			</section>

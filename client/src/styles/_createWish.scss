@@ -2,4 +2,28 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    &__header {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    &__input {
+        margin: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        border: solid 1px black;
+        box-shadow: 0 1px 4px 3px gainsboro ;
+        resize: none;
+    }
+
+    &__button {
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 15px;
+        border: solid  1px black;
+        background-color: #f4e8e3;
+        cursor: pointer;
+        box-shadow: 0 1px 2px 1px gainsboro ;
+    }
 }
