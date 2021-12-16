@@ -7,7 +7,7 @@ function WishCommentCreate(props) {
 	const [error, setError] = useState('')
 
 	function comment() {
-        if (name.length > 0 && name.length > 0) {
+        if (name.length && name.length) {
             postComment(id, name, text)
 			setName('')
 			setText('')

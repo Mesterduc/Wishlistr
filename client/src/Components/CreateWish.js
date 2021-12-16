@@ -8,7 +8,7 @@ function CreateWish(props) {
 	const [description, setDescription] = useState('')
     function createWish() {
 		if(apiService.loggedIn()){
-			if (title.length > 0) {
+			if (title.length) {
 					postWish(title, link, description)
 					setTitle('')
 					setLink('')

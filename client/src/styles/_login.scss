@@ -1,0 +1,32 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__input{
+        margin: 5px;
+    }
+
+    &__signUp {
+        color: rgba(0,0,0, 0.4);
+        margin: 10px;
+        font-size: 13px;
+    }
+}
+.signUp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__input{
+        margin: 5px;
+    }
+
+    &__signUp {
+        color: rgba(0,0,0, 0.4);
+        margin: 10px;
+        font-size: 13px;
+    }
+}

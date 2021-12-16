@@ -7,8 +7,6 @@ function wishRouter() {
 	// GET
 	router.get('/wish', async (req, res) => {
 		const wishes = await Wish.find().sort({ Position: 'desc' })
-		console.log(wishes)
-		// .sort({ createdAt: 'desc' })
 		res.json(wishes)
 	})
 
@@ -29,7 +27,7 @@ function wishRouter() {
 
 	// DELETE
 	router.delete('/wish', async (req, res) => {
-		console.log(req.body)
+		// console.log(req.body)
 		try {
 			const wish = await Wish.findByIdAndDelete(req.body.id)
 			if (wish) {
@@ -47,7 +45,7 @@ function wishRouter() {
 	// UPDATE
 	router.put('/wish', async (req, res) => {
 		try {
-			console.log(req.body.id)
+			// console.log(req.body.id)
 			const wish =  await Wish.findByIdAndUpdate({_id: req.body.id}, {Title: req.body.Title, Description: req.body.Description, Link: req.body.Link},{ new: true })
 			// console.log(wish)
 			if (wish) {

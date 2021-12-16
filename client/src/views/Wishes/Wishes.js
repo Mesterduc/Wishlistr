@@ -9,7 +9,7 @@ function Wishes(props) {
 	const { wishes, changePosition } = props
 	return (
 		<>
-			<h1 className='quotes__header'>Wishes</h1>
+			<h1 className='wishes__header'>My Wishes</h1>
 			
 			{wishes.map((wish) => {
 				return (

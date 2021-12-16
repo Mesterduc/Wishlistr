@@ -14,6 +14,13 @@ class ApiService {
 		this.setToken(response.token)
 		return response
 	}
+	async createUser(email, username, password){
+		
+		const response = await this.post('/user', {
+			email, username, password
+		})
+		return response
+	}
 	// crud wish
 	async getWishes() {
 		const response = await this.get('/wish')

@@ -15,7 +15,7 @@ function userRouters(secret) {
 		if (user) {
 			const payload = { Email: email, Role: user.Role, Username: user.Username }
             if (bcrypt.compareSync(password, user.Password)) {
-                console.log(user.Password)
+                // console.log(user.Password)
                 const token = jwt.sign(payload, secret, {
                     algorithm: 'HS512',
                     expiresIn: '100h',
@@ -32,11 +32,11 @@ function userRouters(secret) {
 
 	// POST user
 	router.post('/user', async (req, res) => {
-        const password = bcrypt.hashSync(req.body.Password, 10)
+        const newPassword = bcrypt.hashSync(req.body.password, 10)
         const data = {
-            Username: req.body.Username,
-            Email: req.body.Email,
-            Password: password
+            Username: req.body.username,
+            Email: req.body.email,
+            Password: newPassword,
         }
 		try {
 			const user = await User.create(data)

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Router, navigate } from '@reach/router'
 import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
+import SignUp from './views/Signup/SignUp'
 import Wishes from './views/Wishes/Wishes'
 import WishView from './views/Wish/Wish'
 import Login from './views/Login/Login'
@@ -94,21 +95,21 @@ function App() {
 	}
 
 	async function changePosition(id, position) {
-    const data = {
+		const data = {
 			id: id,
-			Position: position
+			Position: position,
 		}
-    const reply = await apiService.changePosition(data)
-    console.log(reply)
-    const hej1 = wishes.map(wish => {
-      if(wish._id === id){
-        wish.Position += 1
-      }
-      return wish
-    })
-		const hej2 = hej1.sort((a, b) => (b.Position > a.Position) ? 1 : ((b.Position > a.Position) ? -1 : 0));
-      
-    setWishes(hej2)
+		const reply = await apiService.changePosition(data)
+		console.log(reply)
+		const newData = wishes.map((wish) => {
+			if (wish._id === id) {
+				wish.Position += 1
+			}
+			return wish
+		})
+		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : b.Position > a.Position ? -1 : 0))
+
+		setWishes(sorted)
 	}
 
 	return (
@@ -126,6 +127,7 @@ function App() {
 				></WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login'></Login>
+				<SignUp path='/signUp'></SignUp>
 			</Router>
 		</>
 		// ryk login og createwish in i wishview
