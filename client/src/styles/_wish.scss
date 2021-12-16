@@ -25,11 +25,12 @@
 		text-transform: uppercase;
 	}
 	&__externalLink {
-		width: 100%;
+		font-weight: 400;
 		color: black;
 		text-decoration: none;
 	}
-	&__commentCount {
+	&__site {
+		width: 100%;
 	}
 
 	&__container {
@@ -42,11 +43,42 @@
 		flex-direction: column;
 		box-shadow: 0px 1px 10px 3px #888888;
 	}
+	&__button-container {
+		display: flex;
+		width: 100%;
+		justify-content: space-evenly;
+	}
+	&__button {
+		border: none;
+		padding: 8px;
+		border-radius: 5px;
+		cursor: pointer;
+
+		&-delete {
+			background-color: black;
+			color: white;
+		}
+		&-gifted {
+			background-color: blue;
+			color: white;
+		}
+		&-edit {
+			background-color: gray;
+			color: white;
+		}
+	}
 }
 
-.wishes__header{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-transform: capitalize;
+.wishes {
+	&__header-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	&__header {
+		text-transform: uppercase;
+		background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
 }

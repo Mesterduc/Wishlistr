@@ -26,20 +26,23 @@ function Wish(props) {
 		<>
 			{isEdit && <WishEdit wish={wish} showModel={showModal} editWish={editWish}></WishEdit>}
 			{wish && (
-				<div className='wish'>
+				<section className='wish'>
 					<WishComponent wish={wish} gifted={gifted}></WishComponent>
-					<button type='checkbox' onClick={() => isGifted()}>
+					<article className='wish__button-container'>
+
+					<button className='wish__button wish__button-gifted' onClick={() => isGifted()}>
 						Gifted
 					</button>
-					<button type='checkbox' onClick={() => deleteWish(id)}>
+					<button className='wish__button wish__button-delete' onClick={() => deleteWish(id)}>
 						Delete wish
 					</button>
-					<button type='checkbox' onClick={() => showModal()}>
+					<button className='wish__button wish__button-edit' onClick={() => showModal()}>
 						Edit wish
 					</button>
+					</article>
 					<WishCommentCreate id={wish._id} postComment={postComment}></WishCommentCreate>
 					<WishComment comments={wish.Comments}></WishComment>
-				</div>
+				</section>
 			)}
 		</>
 	)
