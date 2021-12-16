@@ -16,6 +16,10 @@ const wishesSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		Position: {
+			type: Number,
+			default: 0,
+		},
     isGifted: {
       type: Boolean,
       default: false,

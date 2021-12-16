@@ -45,6 +45,11 @@ class ApiService {
 		const response = await this.put('/wish/:id/isGifted', id)
 		return response
 	}
+	// wish change position
+	async changePosition(data) {
+		const response = await this.put('/wish/:id/position', data)
+		return response
+	}
 
 
 	loggedIn() {

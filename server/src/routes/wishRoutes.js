@@ -6,7 +6,9 @@ function wishRouter() {
 	const router = express.Router()
 	// GET
 	router.get('/wish', async (req, res) => {
-		const wishes = await Wish.find().sort({ createdAt: 'desc' })
+		const wishes = await Wish.find().sort({ Position: 'desc' })
+		console.log(wishes)
+		// .sort({ createdAt: 'desc' })
 		res.json(wishes)
 	})
 
@@ -61,15 +63,17 @@ function wishRouter() {
 	})
 	
 
-	
-	// UPDATE wish status
-	router.put('/wish/:id/isGifted', async (req, res) => {
-		// console.log(req.body.Gifted)
-		const wish = await Wish.findByIdAndUpdate(req.body.id, {"$set":{"isGifted": req.body.Gifted}},{ new: true })
-		console.log(wish)
+	// UPDATE wish position
+	router.put('/wish/:id/position', async (req, res) => {
+		const wish = await Wish.findByIdAndUpdate(req.body.id, {"$inc": {Position: req.body.Position}},{ new: true })
 		res.json(wish)
 	})
-	// DELETE
+
+	// UPDATE wish status
+	router.put('/wish/:id/isGifted', async (req, res) => {
+		const wish = await Wish.findByIdAndUpdate(req.body.id, {$set:{isGifted: req.body.Gifted}},{ new: true })
+		res.json(wish)
+	})
 
 	// wish comment
 	//create
