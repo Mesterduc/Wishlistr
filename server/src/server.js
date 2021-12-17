@@ -12,6 +12,7 @@ import wishRouters from "./routes/wishRoutes.js";
 import userRouters from "./routes/userRoutes.js";
 
 function createServer() {
+  const secret = process.env.SECRET || "HelloMyFriend";
   const app = express();
 
   /* The express.json() middleware automatically parses JSON data in the body of
@@ -46,8 +47,6 @@ function createServer() {
     // Open all GET requests on the form "/api/questions/*" using a regular expression
     { url: /\/api\/wish\.*/gim, methods: ["GET"] },
   ];
-
-  const secret = process.env.SECRET || "secret";
 
   app.use(
     checkJwt({ secret, algorithms: ["HS512"] }).unless({ path: openPaths })
