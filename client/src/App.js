@@ -117,12 +117,13 @@ function App() {
 		try{
 		const reply = await apiService.changePosition(data)
 		const newData = wishes.map((wish) => {
-			if (wish._id === id) {
+			if (wish._id === reply._id) {
 				wish.Position += position
 			}
 			return wish
 		})
-		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : b.Position > a.Position ? -1 : 0))
+		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : -1))
+		
 		setWishes(sorted)
 	} catch (error) {
 		return error
