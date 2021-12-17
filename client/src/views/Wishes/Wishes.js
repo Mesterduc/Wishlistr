@@ -1,4 +1,3 @@
-// import { useEffect, useState } from 'react'
 import { Link } from '@reach/router'
 import Wish from '../../Components/Wish'
 import WishPosition from '../../Components/WishPosition'

@@ -12,8 +12,6 @@ class ApiService {
 			password,
 		})
 		this.setToken(response)
-		// console.log(response)
-		// window.location.reload(false);
 		return response
 	}
 	async createUser(email, username, password) {
@@ -83,15 +81,7 @@ class ApiService {
 	}
 
 	loggedIn() {
-		// const hej = jwtDecode(this.getToken())
 		const token = this.getToken()
-		// if (jwtDecode(token).exp < Date.now() / 1000 || token == null){
-		// 	// Do something to renew token
-		// 	// this.logout()
-		// 	console.log(token)
-		// 	return null
-		// }else {
-		// }
 		return token !== null
 	}
 
@@ -105,17 +95,7 @@ class ApiService {
 	}
 
 	setToken(token) {
-		// console.log(token.username)
 		localStorage.setItem('token', token.token)
-		// localStorage.setItem('username', token.username)
-		// localStorage.setItem('role', token.role)
-		// localStorage.setItem('username', token.username)
-		// localStorage.setItem('user', token.role)
-		// console.log(token.role)
-		// const hej = localStorage.getItem('user')
-		// hej.forEach(hej => {
-		// 	console.log(hej)
-		// })
 	}
 
 	getToken() {
@@ -125,8 +105,6 @@ class ApiService {
 
 	logout() {
 		localStorage.removeItem('token')
-		// localStorage.removeItem('username')
-		// localStorage.removeItem('role')
 		window.location.reload(false)
 	}
 

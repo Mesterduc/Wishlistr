@@ -10,10 +10,6 @@ import apiService from './apiService'
 
 function App() {
 	const [wishes, setWishes] = useState([])
-	// const [user, setUser] = useState({ username: '', role: '', isLoggedin: false })
-	// const [username, setUsername] = useState('')
-	// const [role, setRole] = useState('')
-	// const [isLoggedin, setIsLoggedin] = useState(false)
 	useEffect(() => {
 		getData()
 	}, [])
@@ -133,16 +129,6 @@ function App() {
 	}
 	}
 
-	function loginUser(role, username) {
-		// setUser({ username: username, role: role, isLoggedin: true })
-	}
-	function signoutUser() {
-		// setRole('')
-		// setUsername('')
-		// setIsLoggedin(false)
-		// setUser({ username: '', role: '', isLoggedin: false })
-	}
-
 	return (
 		<>
 			<Navbar />
@@ -157,7 +143,7 @@ function App() {
 					deleteWish={deleteWish}
 				></WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
-				<Login path='/login' loginUser={loginUser} signoutUser={signoutUser}></Login>
+				<Login path='/login'></Login>
 				<SignUp path='/signUp'></SignUp>
 			</Router>
 		</>

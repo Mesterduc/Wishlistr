@@ -1,4 +1,3 @@
-// import WishPosition from './WishPosition'
 
 function Wish(props) {
 	const { wish} = props
