@@ -31,7 +31,7 @@ function Wish(props) {
 			alert('You need to be logged in, to change gift status')
 		}
 	}
-	function showModal(){
+	function showModal() {
 		setIsEdit(!isEdit)
 	}
 
@@ -42,16 +42,15 @@ function Wish(props) {
 				<section className='wish'>
 					<WishComponent wish={wish} gifted={gifted}></WishComponent>
 					<article className='wish__button-container'>
-
-					<button className='wish__button wish__button-gifted' onClick={() => isGifted()}>
-						Gifted
-					</button>
-					<button className='wish__button wish__button-delete' onClick={() => deleteAction()}>
-						Delete wish
-					</button>
-					<button className='wish__button wish__button-edit' onClick={() => showModal()}>
-						Edit wish
-					</button>
+						<button className='wish__button wish__button-gifted' onClick={() => isGifted()}>
+							Received
+						</button>
+						<button className='wish__button wish__button-delete' onClick={() => deleteAction()}>
+							Delete wish
+						</button>
+						<button className='wish__button wish__button-edit' onClick={() => showModal()}>
+							Edit wish
+						</button>
 					</article>
 					{apiService.loggedIn() && children}
 					<WishComment comments={wish.Comments}></WishComment>
