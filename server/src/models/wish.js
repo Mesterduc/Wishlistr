@@ -51,7 +51,7 @@ const wishesSchema = new mongoose.Schema(
 
 const Wish = mongoose.model('Wish', wishesSchema)
 
-async function hej(){
+async function addDataIfEmpty(){
   const db = await Wish.countDocuments({})
   if(db === 0 ){
    let testData = [
@@ -69,6 +69,6 @@ async function hej(){
     Wish.insertMany(testData)
   }
 }
-hej()
+addDataIfEmpty()
 
 export default Wish
