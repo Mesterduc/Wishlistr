@@ -9,7 +9,7 @@ function WishPosition(props) {
 				alert(msg)
 			}
 		} else {
-			alert('You need to be logged in to create a wish')
+			alert('You need to be logged in to change position')
 		}
 	}
 

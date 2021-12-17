@@ -11,7 +11,7 @@ class ApiService {
 			email,
 			password,
 		})
-		this.setToken(response.token)
+		this.setToken(response)
 		// console.log(response)
 		// window.location.reload(false);
 		return response
@@ -105,15 +105,28 @@ class ApiService {
 	}
 
 	setToken(token) {
-		localStorage.setItem('token', token)
+		// console.log(token.username)
+		localStorage.setItem('token', token.token)
+		// localStorage.setItem('username', token.username)
+		// localStorage.setItem('role', token.role)
+		// localStorage.setItem('username', token.username)
+		// localStorage.setItem('user', token.role)
+		// console.log(token.role)
+		// const hej = localStorage.getItem('user')
+		// hej.forEach(hej => {
+		// 	console.log(hej)
+		// })
 	}
 
 	getToken() {
 		return localStorage.getItem('token')
 	}
+	
 
 	logout() {
 		localStorage.removeItem('token')
+		// localStorage.removeItem('username')
+		// localStorage.removeItem('role')
 		window.location.reload(false)
 	}
 

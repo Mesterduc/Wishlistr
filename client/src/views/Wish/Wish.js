@@ -53,7 +53,7 @@ function Wish(props) {
 						Edit wish
 					</button>
 					</article>
-					<WishCommentCreate id={wish._id} postComment={postComment}></WishCommentCreate>
+					{apiService.loggedIn() && <WishCommentCreate id={wish._id} postComment={postComment}></WishCommentCreate>}
 					<WishComment comments={wish.Comments}></WishComment>
 				</section>
 			)}

@@ -10,7 +10,7 @@ import apiService from './apiService'
 
 function App() {
 	const [wishes, setWishes] = useState([])
-	const [user, setUser] = useState({ username: '', role: '', isLoggedin: false })
+	// const [user, setUser] = useState({ username: '', role: '', isLoggedin: false })
 	// const [username, setUsername] = useState('')
 	// const [role, setRole] = useState('')
 	// const [isLoggedin, setIsLoggedin] = useState(false)
@@ -121,34 +121,33 @@ function App() {
 		try{
 		const reply = await apiService.changePosition(data)
 		const newData = wishes.map((wish) => {
-			if (wish._id === reply._id) {
-				wish.Position += 1
+			if (wish._id === id) {
+				wish.Position += position
 			}
 			return wish
 		})
 		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : b.Position > a.Position ? -1 : 0))
-
 		setWishes(sorted)
 	} catch (error) {
 		return error
 	}
 	}
 
-	async function loginUser(role, username) {
-		await setUser({ username: username, role: role, isLoggedin: true })
+	function loginUser(role, username) {
+		// setUser({ username: username, role: role, isLoggedin: true })
 	}
 	function signoutUser() {
 		// setRole('')
 		// setUsername('')
 		// setIsLoggedin(false)
-		setUser({ username: '', role: '', isLoggedin: false })
+		// setUser({ username: '', role: '', isLoggedin: false })
 	}
 
 	return (
 		<>
 			<Navbar />
 			<Router>
-				<Wishes path='/' wishes={wishes} changePosition={changePosition} user={user}></Wishes>
+				<Wishes path='/' wishes={wishes} changePosition={changePosition}></Wishes>
 				<WishView
 					path='/wish/:id/*'
 					gifted={gifted}
@@ -156,14 +155,14 @@ function App() {
 					getWish={getWish}
 					postComment={postComment}
 					deleteWish={deleteWish}
-					user={user}
 				></WishView>
-				<CreateWish path='/createWish' postWish={postWish} user={user}></CreateWish>
+				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login' loginUser={loginUser} signoutUser={signoutUser}></Login>
 				<SignUp path='/signUp'></SignUp>
 			</Router>
 		</>
-		// move components into wishview
+		// move components into wishview /children
+		// local storage 
 	)
 }
 

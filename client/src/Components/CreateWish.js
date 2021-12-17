@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { navigate } from '@reach/router'
 import apiService from '../apiService'
 
 function CreateWish(props) {
@@ -17,9 +18,8 @@ function CreateWish(props) {
 				}else {
 					alert(msg)
 				}
-				// navigate('/')
+				navigate('/')
 			} else {
-				// setError('Missing input')
 				alert('You need a title for your wish')
 			}
 		} else {

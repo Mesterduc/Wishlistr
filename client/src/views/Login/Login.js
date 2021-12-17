@@ -2,14 +2,18 @@ import { useState } from 'react'
 import { Link } from '@reach/router'
 import apiService from '../../apiService'
 function Login(props) {
-	const { loginUser, signoutUser } = props
+	// const { loginUser, signoutUser } = props
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	async function login() {
+	async function login(e) {
 		try {
 			const user = await apiService.login(email, password)
-			loginUser(user.role, user.username)
+			// console.log(user.role)
+			localStorage.setItem('username', user.username)
+			// localStorage.setItem('role', user.role)
+			// console.log(e.localStorage.getItem('username'))
+			// loginUser(user.role, user.username)
 			// navigate('/')
 		} catch (error) {
 			alert(`${error.msg}`)
@@ -17,10 +21,12 @@ function Login(props) {
 	}
 
 	function getToken() {
-		console.log(apiService.getToken())
+		// console.log(apiService.getToken())
+		const hej = localStorage.getItem('username')
+		console.log(localStorage.getItem('username'))
 	}
 	function logout() {
-		signoutUser()
+		// signoutUser()
 		apiService.logout()
 	}
 
@@ -42,7 +48,7 @@ function Login(props) {
 					value={password}
 					onChange={(event) => setPassword(event.target.value)}
 				></input>
-				<button className='login__button' type='button' onClick={() => login()}>
+				<button className='login__button' type='button' onClick={(e) => login(e)}>
 					Login
 				</button>
 				<Link to='/signUp' className='login__signUp'>

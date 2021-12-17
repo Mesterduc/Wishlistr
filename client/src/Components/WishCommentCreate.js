@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import apiService from '../apiService'
 function WishCommentCreate(props) {
 	const { id, postComment } = props
@@ -6,6 +6,10 @@ function WishCommentCreate(props) {
 	const [name, setName] = useState('')
 	const [text, setText] = useState('')
 	const [error, setError] = useState('')
+
+	useEffect(() => {
+		setName(localStorage.getItem("username"))
+	}, [])
 
 	async function comment() {
 		if (name.length && name.length) {
@@ -31,11 +35,12 @@ function WishCommentCreate(props) {
 			<p className='createComment__error'>{error}</p>
 			<div className='createComment__input-container'>
 				<input
+				style={{color: "black"}}
 					className='createComment__input'
 					type='text'
 					placeholder='Name'
 					value={name}
-					onChange={(event) => setName(event.target.value)}
+					disabled
 				></input>
 				<input
 					className='createComment__input'
