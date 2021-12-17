@@ -11,9 +11,22 @@ function Wish(props) {
 
 	const [isEdit, setIsEdit] = useState(false)
 
-	function isGifted() {
+	async function isGifted() {
 		if (apiService.loggedIn()) {
-			gifted(id, !wish.isGifted)
+			const msg = await gifted(id, !wish.isGifted)
+			if (msg) {
+				alert(msg)
+			}
+		} else {
+			alert('You need to be logged in, to change gift status')
+		}
+	}
+	async function deleteAction() {
+		if (apiService.loggedIn()) {
+			const msg = await deleteWish(id)
+			if (msg) {
+				alert(msg)
+			}
 		} else {
 			alert('You need to be logged in, to change gift status')
 		}
@@ -33,7 +46,7 @@ function Wish(props) {
 					<button className='wish__button wish__button-gifted' onClick={() => isGifted()}>
 						Gifted
 					</button>
-					<button className='wish__button wish__button-delete' onClick={() => deleteWish(id)}>
+					<button className='wish__button wish__button-delete' onClick={() => deleteAction()}>
 						Delete wish
 					</button>
 					<button className='wish__button wish__button-edit' onClick={() => showModal()}>

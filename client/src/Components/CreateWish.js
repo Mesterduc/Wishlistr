@@ -2,32 +2,37 @@ import { useState } from 'react'
 import apiService from '../apiService'
 
 function CreateWish(props) {
-    const {postWish} = props
+	const { postWish } = props
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
 	const [description, setDescription] = useState('')
-    function createWish() {
-		if(apiService.loggedIn()){
+	async function createWish() {
+		if (apiService.loggedIn()) {
 			if (title.length) {
-					postWish(title, link, description)
+				const msg = await postWish(title, link, description)
+				if (!msg) {
 					setTitle('')
 					setLink('')
 					setDescription('')
+				}else {
+					alert(msg)
+				}
+				// navigate('/')
 			} else {
 				// setError('Missing input')
-				alert("You need a title for your wish")
+				alert('You need a title for your wish')
 			}
-		}else {
-			alert("You need to be logged in to create a wish")
+		} else {
+			alert('You need to be logged in to create a wish')
 		}
 	}
-    
+
 	return (
 		<>
-			<article className="createWish">
-				<h1 className="createWish__header">create wish</h1>
+			<article className='createWish'>
+				<h1 className='createWish__header'>create wish</h1>
 				<input
-				className="createWish__input"
+					className='createWish__input'
 					placeholder='Title'
 					onChange={(event) => {
 						setTitle(event.target.value)
@@ -35,7 +40,7 @@ function CreateWish(props) {
 					value={title}
 				></input>
 				<input
-				className="createWish__input"
+					className='createWish__input'
 					placeholder='Link'
 					onChange={(event) => {
 						setLink(event.target.value)
@@ -43,7 +48,7 @@ function CreateWish(props) {
 					value={link}
 				></input>
 				<textarea
-				className="createWish__input"
+					className='createWish__input'
 					placeholder='Description'
 					onChange={(event) => {
 						setDescription(event.target.value)
@@ -51,7 +56,9 @@ function CreateWish(props) {
 					value={description}
 					rows='5'
 				></textarea>
-                <button className="createWish__button" onClick={() => createWish()}>Create Wish</button>
+				<button className='createWish__button' onClick={() => createWish()}>
+					Create Wish
+				</button>
 			</article>
 		</>
 	)

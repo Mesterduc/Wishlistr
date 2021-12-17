@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { Link } from '@reach/router'
 import apiService from '../../apiService'
 function Login(props) {
+	const { loginUser, signoutUser } = props
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
 	async function login() {
 		try {
-			await apiService.login(email, password)
+			const user = await apiService.login(email, password)
+			loginUser(user.role, user.username)
 			// navigate('/')
 		} catch (error) {
 			alert(`${error.msg}`)
@@ -18,6 +20,7 @@ function Login(props) {
 		console.log(apiService.getToken())
 	}
 	function logout() {
+		signoutUser()
 		apiService.logout()
 	}
 

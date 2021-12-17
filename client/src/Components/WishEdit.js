@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import apiService from '../apiService'
 function WishEdit(props) {
 	const { wish, editWish, showModel } = props
 
@@ -14,9 +15,16 @@ function WishEdit(props) {
 		}
 	}, [])
 
-	function edit() {
-		editWish(title, description, link, wish._id)
-        showModel()
+	async function edit() {
+		if (apiService.loggedIn()) {
+			 const msg = await editWish(title, description, link, wish._id)
+			showModel()
+			if (msg) {
+				alert(msg)
+			}
+		} else {
+			alert('You need to be logged in, to change gift status')
+		}
 	}
 
 	return (

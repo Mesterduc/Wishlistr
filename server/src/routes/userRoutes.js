@@ -22,6 +22,8 @@ function userRouters(secret) {
                 })
                 res.json({
                     msg: `User '${email}' authenticated successfully`,
+                    role: user.Role,
+                    username: user.Username,
                     token: token,
                 })
             }

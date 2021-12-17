@@ -10,6 +10,10 @@ import apiService from './apiService'
 
 function App() {
 	const [wishes, setWishes] = useState([])
+	const [user, setUser] = useState({ username: '', role: '', isLoggedin: false })
+	// const [username, setUsername] = useState('')
+	// const [role, setRole] = useState('')
+	// const [isLoggedin, setIsLoggedin] = useState(false)
 	useEffect(() => {
 		getData()
 	}, [])
@@ -27,9 +31,8 @@ function App() {
 		try {
 			const reply = await apiService.postWish(data)
 			setWishes([...wishes, reply])
-			navigate('/')
 		} catch (error) {
-			console.log(error)
+			return error
 		}
 	}
 	function getWish(id) {
@@ -41,14 +44,18 @@ function App() {
 			Name: name,
 			Text: text,
 		}
-		const reply = await apiService.postComment(data)
-		const newWishes = wishes.map((wish) => {
-			if (wish._id === reply._id) {
-				wish = reply
-			}
-			return wish
-		})
-		setWishes(newWishes)
+		try {
+			const reply = await apiService.postComment(data)
+			const newWishes = wishes.map((wish) => {
+				if (wish._id === reply._id) {
+					wish = reply
+				}
+				return wish
+			})
+			setWishes(newWishes)
+		} catch (error) {
+			return error
+		}
 	}
 
 	async function gifted(id, gifted) {
@@ -56,25 +63,33 @@ function App() {
 			id: id,
 			Gifted: gifted,
 		}
-		const reply = await apiService.gifted(data)
-		const newData = wishes.map((wish) => {
-			if (wish._id === reply._id) {
-				wish.isGifted = !wish.isGifted
-			}
-			return wish
-		})
-		setWishes(newData)
+		try {
+			const reply = await apiService.gifted(data)
+			const newData = wishes.map((wish) => {
+				if (wish._id === reply._id) {
+					wish.isGifted = !wish.isGifted
+				}
+				return wish
+			})
+			setWishes(newData)
+		} catch (error) {
+			return error
+		}
 	}
 
 	async function deleteWish(id) {
-		if (apiService.loggedIn()) {
+		// if (apiService.loggedIn()) {
+		try {
 			const reply = await apiService.deleteWish({ id })
 			const newData = wishes.filter((wish) => wish._id !== reply._id)
 			setWishes(newData)
 			navigate('/')
-		} else {
-			alert('You need to be logged in, to delete this wish')
+		} catch (error) {
+			return error
 		}
+		// } else {
+		// 	alert('You need to be logged in, to delete this wish')
+		// }
 	}
 
 	async function editWish(title, description, link, id) {
@@ -84,6 +99,7 @@ function App() {
 			Description: description,
 			Link: link,
 		}
+		try {
 		const reply = await apiService.editWish(data)
 		const newData = wishes.map((wish) => {
 			if (wish._id === reply._id) {
@@ -92,6 +108,9 @@ function App() {
 			return wish
 		})
 		setWishes(newData)
+	} catch (error) {
+		return error
+	}
 	}
 
 	async function changePosition(id, position) {
@@ -99,10 +118,10 @@ function App() {
 			id: id,
 			Position: position,
 		}
+		try{
 		const reply = await apiService.changePosition(data)
-		console.log(reply)
 		const newData = wishes.map((wish) => {
-			if (wish._id === id) {
+			if (wish._id === reply._id) {
 				wish.Position += 1
 			}
 			return wish
@@ -110,13 +129,26 @@ function App() {
 		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : b.Position > a.Position ? -1 : 0))
 
 		setWishes(sorted)
+	} catch (error) {
+		return error
+	}
+	}
+
+	async function loginUser(role, username) {
+		await setUser({ username: username, role: role, isLoggedin: true })
+	}
+	function signoutUser() {
+		// setRole('')
+		// setUsername('')
+		// setIsLoggedin(false)
+		setUser({ username: '', role: '', isLoggedin: false })
 	}
 
 	return (
 		<>
 			<Navbar />
 			<Router>
-				<Wishes path='/' wishes={wishes} changePosition={changePosition}></Wishes>
+				<Wishes path='/' wishes={wishes} changePosition={changePosition} user={user}></Wishes>
 				<WishView
 					path='/wish/:id/*'
 					gifted={gifted}
@@ -124,13 +156,14 @@ function App() {
 					getWish={getWish}
 					postComment={postComment}
 					deleteWish={deleteWish}
+					user={user}
 				></WishView>
-				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
-				<Login path='/login'></Login>
+				<CreateWish path='/createWish' postWish={postWish} user={user}></CreateWish>
+				<Login path='/login' loginUser={loginUser} signoutUser={signoutUser}></Login>
 				<SignUp path='/signUp'></SignUp>
 			</Router>
 		</>
-		// ryk login og createwish in i wishview
+		// move components into wishview
 	)
 }
 

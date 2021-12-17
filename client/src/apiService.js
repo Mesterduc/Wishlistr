@@ -1,4 +1,4 @@
-// import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 const API_URL = process.env.REACT_APP_API
 
 class ApiService {
@@ -12,12 +12,15 @@ class ApiService {
 			password,
 		})
 		this.setToken(response.token)
+		// console.log(response)
+		// window.location.reload(false);
 		return response
 	}
-	async createUser(email, username, password){
-		
+	async createUser(email, username, password) {
 		const response = await this.post('/user', {
-			email, username, password
+			email,
+			username,
+			password,
 		})
 		return response
 	}
@@ -28,18 +31,31 @@ class ApiService {
 	}
 
 	async postWish(data) {
-		const response = await this.post('/wish', data)
-		return response
+		if(this.loggedInAs() === "admin"){
+			const response = await this.post('/wish', data)
+			return response
+		} else {
+			throw "You don't have the auth to do this action"
+		}
+
 	}
 
 	async deleteWish(id) {
-		const response = await this.delete('/wish', id)
-		return response
+		if(this.loggedInAs() === "admin"){
+			const response = await this.delete('/wish', id)
+			return response
+		} else {
+			throw "You don't have the auth to do this action"
+		}
 	}
 
-	async editWish(data){
-		const response = await this.put('/wish', data)
-		return response
+	async editWish(data) {
+		if(this.loggedInAs() === "admin"){
+			const response = await this.put('/wish', data)
+			return response
+		} else {
+			throw "You don't have the auth to do this action"
+		}
 	}
 
 	// wish comment
@@ -49,20 +65,43 @@ class ApiService {
 	}
 	// wish isGifted
 	async gifted(id) {
-		const response = await this.put('/wish/:id/isGifted', id)
-		return response
+		if(this.loggedInAs() === "admin"){
+			const response = await this.put('/wish/:id/isGifted', id)
+			return response
+		} else {
+			throw "You don't have the auth to do this action"
+		}
 	}
 	// wish change position
 	async changePosition(data) {
-		const response = await this.put('/wish/:id/position', data)
-		return response
+		if(this.loggedInAs() === "admin"){
+			const response = await this.put('/wish/:id/position', data)
+			return response
+		} else {
+			throw "You don't have the auth to do this action"
+		}
 	}
-
 
 	loggedIn() {
 		// const hej = jwtDecode(this.getToken())
-		// console.log(hej)
-		return this.getToken() !== null
+		const token = this.getToken()
+		// if (jwtDecode(token).exp < Date.now() / 1000 || token == null){
+		// 	// Do something to renew token
+		// 	// this.logout()
+		// 	console.log(token)
+		// 	return null
+		// }else {
+		// }
+		return token !== null
+	}
+
+	loggedInAs() {
+		if (this.getToken() === null) {
+			return false
+		} else {
+			const token = jwtDecode(this.getToken())
+			return token.Role
+		}
 	}
 
 	setToken(token) {
@@ -75,6 +114,7 @@ class ApiService {
 
 	logout() {
 		localStorage.removeItem('token')
+		window.location.reload(false)
 	}
 
 	async makeRequest(path, options) {

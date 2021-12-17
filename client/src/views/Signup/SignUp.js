@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from '@reach/router'
 import apiService from '../../apiService'
 function SignUp(props) {
-    
 	const [email, setEmail] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')

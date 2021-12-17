@@ -38,7 +38,7 @@ function createServer() {
   const openPaths = [
     // Open "/api/users/authenticate" for POST requests
     { url: "/api/user/auth", methods: ["POST"] },
-    { url: "/api/wish/:id/comment", methods: ["POST"] },
+    // { url: "/api/wish/:id/comment", methods: ["POST"] },
   
     // Open everything that doesn't begin with "/api"
     /^(?!\/api).*/gim,
@@ -50,7 +50,6 @@ function createServer() {
   const secret = process.env.SECRET || "secret";
 
   app.use(
-    // checkJwt({ secret, algorithms: ["HS512"] }).unless({ path: openPaths })
     checkJwt({ secret, algorithms: ["HS512"] }).unless({ path: openPaths })
   );
 
