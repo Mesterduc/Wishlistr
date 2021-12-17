@@ -28,7 +28,7 @@ function hashKode(password){
 }
 
 async function addDataIfEmpty(){
-    const db = await Wish.countDocuments({})
+    const db = await User.countDocuments({})
     if(db === 0 ){
      let testData = [
         {Username: "Cai", Email: "cai@c.com", Password: hashKode("kode123r"), Role: "admin"},
