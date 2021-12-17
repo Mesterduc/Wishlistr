@@ -36,7 +36,7 @@ async function addDataIfEmpty(){
         {Username: "Duc", Email: "d@d.com", Password: hashKode("kode123")},
         
       ]
-      Wish.insertMany(testData)
+      User.insertMany(testData)
     }
   }
   addDataIfEmpty()
