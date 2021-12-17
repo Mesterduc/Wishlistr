@@ -6,7 +6,7 @@ import apiService from '../../apiService'
 import { useState } from 'react'
 
 function Wish(props) {
-	const { getWish, id, postComment, gifted, deleteWish, editWish } = props
+	const { getWish, id, gifted, deleteWish, editWish, children } = props
 	const wish = getWish(id)
 
 	const [isEdit, setIsEdit] = useState(false)
@@ -53,7 +53,7 @@ function Wish(props) {
 						Edit wish
 					</button>
 					</article>
-					{apiService.loggedIn() && <WishCommentCreate id={wish._id} postComment={postComment}></WishCommentCreate>}
+					{apiService.loggedIn() && children}
 					<WishComment comments={wish.Comments}></WishComment>
 				</section>
 			)}

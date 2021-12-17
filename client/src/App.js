@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Router, navigate } from '@reach/router'
 import Navbar from './Components/Navbar'
 import CreateWish from './Components/CreateWish'
+import WishCommentCreate from './Components/WishCommentCreate'
 import SignUp from './views/Signup/SignUp'
 import Wishes from './views/Wishes/Wishes'
 import WishView from './views/Wish/Wish'
@@ -74,7 +75,6 @@ function App() {
 	}
 
 	async function deleteWish(id) {
-		// if (apiService.loggedIn()) {
 		try {
 			const reply = await apiService.deleteWish({ id })
 			const newData = wishes.filter((wish) => wish._id !== reply._id)
@@ -83,9 +83,6 @@ function App() {
 		} catch (error) {
 			return error
 		}
-		// } else {
-		// 	alert('You need to be logged in, to delete this wish')
-		// }
 	}
 
 	async function editWish(title, description, link, id) {
@@ -96,17 +93,17 @@ function App() {
 			Link: link,
 		}
 		try {
-		const reply = await apiService.editWish(data)
-		const newData = wishes.map((wish) => {
-			if (wish._id === reply._id) {
-				wish = reply
-			}
-			return wish
-		})
-		setWishes(newData)
-	} catch (error) {
-		return error
-	}
+			const reply = await apiService.editWish(data)
+			const newData = wishes.map((wish) => {
+				if (wish._id === reply._id) {
+					wish = reply
+				}
+				return wish
+			})
+			setWishes(newData)
+		} catch (error) {
+			return error
+		}
 	}
 
 	async function changePosition(id, position) {
@@ -114,20 +111,20 @@ function App() {
 			id: id,
 			Position: position,
 		}
-		try{
-		const reply = await apiService.changePosition(data)
-		const newData = wishes.map((wish) => {
-			if (wish._id === reply._id) {
-				wish.Position += position
-			}
-			return wish
-		})
-		const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : -1))
-		
-		setWishes(sorted)
-	} catch (error) {
-		return error
-	}
+		try {
+			const reply = await apiService.changePosition(data)
+			const newData = wishes.map((wish) => {
+				if (wish._id === reply._id) {
+					wish.Position += position
+				}
+				return wish
+			})
+			const sorted = newData.sort((a, b) => (b.Position > a.Position ? 1 : -1))
+
+			setWishes(sorted)
+		} catch (error) {
+			return error
+		}
 	}
 
 	return (
@@ -140,16 +137,15 @@ function App() {
 					gifted={gifted}
 					editWish={editWish}
 					getWish={getWish}
-					postComment={postComment}
 					deleteWish={deleteWish}
-				></WishView>
+				>
+					<WishCommentCreate path='/' postComment={postComment}></WishCommentCreate>
+				</WishView>
 				<CreateWish path='/createWish' postWish={postWish}></CreateWish>
 				<Login path='/login'></Login>
 				<SignUp path='/signUp'></SignUp>
 			</Router>
 		</>
-		// move components into wishview /children
-		// local storage 
 	)
 }
 
